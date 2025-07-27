@@ -87,7 +87,10 @@ async def handle_member_new(message: Message):
         await ask_university(message.chat.id, user.first_name, user.id)
 
 
-@bot.message_handler(func=lambda message: True)
+@bot.message_handler(
+    func=lambda message: message.chat.type == "group"
+    or message.chat.type == "supergroup"
+)
 async def handle_all_other_messages(message: Message):
     if message.from_user:
         user_id = message.from_user.id

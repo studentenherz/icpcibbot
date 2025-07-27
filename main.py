@@ -12,6 +12,7 @@ from telebot.util import update_types
 from dotenv import load_dotenv
 
 from db import DBHandler
+from utils import is_admin_guard
 
 load_dotenv()
 
@@ -25,6 +26,7 @@ async def handle_start(message):
 
 
 @bot.message_handler(commands=["tags"])
+@is_admin_guard
 async def handle_tags_list(message: Message):
     tags = db_handler.get_tags()
     resp_msg = "NO TAGS" if len(tags) == 0 else "\n".join(tags)
@@ -33,6 +35,7 @@ async def handle_tags_list(message: Message):
 
 
 @bot.message_handler(commands=["add"])
+@is_admin_guard
 async def handle_tsgs_add(message: Message):
     if message.text:
         tag = message.text.split(" ")[1]

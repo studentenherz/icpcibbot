@@ -36,11 +36,22 @@ async def handle_tags_list(message: Message):
 
 @bot.message_handler(commands=["add"])
 @is_admin_guard
-async def handle_tsgs_add(message: Message):
+async def handle_tags_add(message: Message):
     if message.text:
         tag = message.text.split(" ")[1]
         if db_handler.insert_tag(tag):
             await bot.reply_to(message, "Tag added successfully")
+        else:
+            await bot.reply_to(message, "There was a problem")
+
+
+@bot.message_handler(commands=["del"])
+@is_admin_guard
+async def handle_tags_delete(message: Message):
+    if message.text:
+        tag = message.text.split(" ")[1]
+        if db_handler.delete_tag(tag):
+            await bot.reply_to(message, "Tag deleted successfully")
         else:
             await bot.reply_to(message, "There was a problem")
 

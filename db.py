@@ -23,3 +23,12 @@ class DBHandler:
         except Exception as e:
             print(e)
             return False
+
+    def delete_tag(self, tag: str) -> bool:
+        try:
+            self._cur.execute("DELETE FROM tags WHERE name = ?", (tag,))
+            self._db_con.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
